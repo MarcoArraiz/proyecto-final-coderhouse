@@ -1,0 +1,289 @@
+paths:
+  /api/carts:
+    get:
+      tags:
+        - carts
+      summary: Get all carts
+      description: Get all carts
+      operationId: getAllCarts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - carts
+      summary: Create a new cart
+      description: Create a new cart
+      operationId: createCart
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/carts/{id}:
+    get:
+      tags:
+        - carts
+      summary: Get cart by id
+      description: Get cart by id
+      operationId: getCartById
+      parameters:
+        - name: id
+          in: path
+          description: ID of cart to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '404':
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - carts
+      summary: Update an existing cart
+      description: Update an existing cart
+      operationId: updateCart
+      parameters:
+        - name: id
+          in: path
+          description: ID of cart to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Cart object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - carts
+      summary: Delete a cart
+      description: Delete a cart
+      operationId: deleteCart
+      parameters:
+        - name: id
+          in: path
+          description: ID of cart to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/carts/{id}/products/{id_prod}:
+    put:
+      tags:
+        - carts
+      summary: Update an existing cart
+      description: Update an existing cart
+      operationId: updateCart
+      parameters:
+        - name: id
+          in: path
+          description: ID of cart to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: id_prod
+          in: path
+          description: ID of product to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Cart object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/AddToCart'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - carts
+      summary: Delete a cart
+      description: Delete a cart
+      operationId: deleteCart
+      parameters:
+        - name: id
+          in: path
+          description: ID of cart to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: id_prod
+          in: path
+          description: ID of product to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Cart:
+      type: object
+      required:
+        - _id
+        - id_prod
+        - quantity
+      properties:
+        _id:
+          type: ObjectId
+          description: ID autegenated by MongoDB
+        id_prod:
+          type: ObjectId
+        quantity:
+          type: integer
+          format: int64
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  requestBodies:
+    AddToCart:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - quantity
+            properties:
+              quantity:
+                type: integer
+                format: int64
+            example:
+              quantity: 1

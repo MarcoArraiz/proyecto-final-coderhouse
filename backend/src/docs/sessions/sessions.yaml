@@ -1,0 +1,52 @@
+paths:
+  /api/sessions/login:
+    post:
+      tags:
+        - sessions
+      summary: Log users in
+      description: Receive credentials and log users in
+      operationId: login
+      requestBody:
+        required: true
+        description: Login object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/Login'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+  requestBodies:
+    Login:
+      description: Login object that needs to be added to the store
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: juana@gmail.com
+        password: 123456

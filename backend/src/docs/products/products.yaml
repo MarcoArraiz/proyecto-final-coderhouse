@@ -1,0 +1,268 @@
+paths:
+  /api/products:
+    get:
+      tags:
+        - products
+      summary: Get all products
+      description: Get all products
+      operationId: getAllProducts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+  /api/products/{id}:
+    get:
+      tags:
+        - products
+      summary: Get product by id
+      description: Get product by id
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          description: ID of product to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - products
+      summary: Update product
+      description: Update product
+      operationId: updateProduct
+      parameters:
+        - name: id
+          in: path
+          description: ID of product to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        description: Product object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/Product'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - products
+      summary: Delete product
+      description: Delete product
+      operationId: deleteProduct
+      parameters:
+        - name: id
+          in: path
+          description: ID of product to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/products/{code}:
+    put:
+      tags:
+        - products
+      summary: Update product by code
+      description: Update product by code
+      operationId: updateProductByCode
+      parameters:
+        - name: code
+          in: path
+          description: Code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Product object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/Product'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/products/mockingproducts:
+    post:
+      tags:
+        - products
+      summary: Create a new product
+      description: Create a new product
+      operationId: createProduct
+      requestBody:
+        description: Product object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - _id
+        - title
+        - description
+        - code
+        - price
+        - stock
+        - thumbnail
+      properties:
+        _id:
+          type: ObjectId
+          description: ID autegenated by MongoDB
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+          format: float
+        stock:
+          type: integer
+          format: int64
+        thumbnail:
+          type: array
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  requestBodies:
+    Product:
+      type: object
+      description: Product object that needs to be added to the store
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: number
+          format: float
+        stock:
+          type: integer
+          format: int64
+      example:
+        title: Stella Artois Lager 473ml
+        description: 473ml
+        code: abc123
+        price: 580
+        stock: 600

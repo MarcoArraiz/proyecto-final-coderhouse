@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmación de Orden de Compra</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .total-row {
+      font-weight: bold;
+    }
+    .final-amount {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>¡Gracias por su compra!</h1>
+  <p>Su número de orden de compra es: <strong>{{orderId}}</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Total Producto</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{productsRows}}
+    </tbody>
+  </table>
+  <table>
+    <tr class="total-row">
+      <td>Total Compra:</td>
+      <td>{{totalAmount}}</td>
+    </tr>
+    <tr class="total-row">
+      <td>Descuento:</td>
+      <td>{{discount}}</td>
+    </tr>
+    <tr class="total-row final-amount">
+      <td>Monto Final:</td>
+      <td>{{finalAmount}}</td>
+    </tr>
+  </table>
+</body>
+</html>
