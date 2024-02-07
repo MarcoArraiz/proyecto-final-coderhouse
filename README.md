@@ -1,4 +1,9 @@
 # **ENTREGA FINAL - CURSO DESARROLLO BACKEND**
+
+# **Documentar API**
+
+✓ Se implementó Swagger para disonibilizar en el endpoint https://proyecto-final-coderhouse-backend.onrender.com/apidocs/#/ la documentación de las rutas de API Carts, Users, Products y Sessions
+
 ## RESUMEN DE FEATURES
 ### Tecnologia del proyecto
 - La estructura del  frontend está hecho con React y Vite y la UI con Bootstrap y los modulos de alerta con SweetAlert2
@@ -162,10 +167,6 @@ https://curso-backend-entrega-final-frontend.onrender.com
     1. crear un cart mediante post
     2. agregar un producto a un cart mediante PUT en /carts/:cid/products/:pid
     3. eliminar cart mediante DELETE en /carts/:id
-
-# **Documentar API**
-
-✓ Se implementó Swagger para disonibilizar en el endpoint http://localhost:4000/apidocs/#/ la documentación de las rutas de API Carts, Users, Products y Sessions
 
 # **Práctica de integración sobre tu ecommerce**
 
